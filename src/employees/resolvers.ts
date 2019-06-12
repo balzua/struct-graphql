@@ -7,12 +7,7 @@ export const resolvers = {
         employeeById: (root: any, { id }: any) => Employee.findOne({ id }),
     },
     Employee: {
-        department: async (employee: any) => {
-            const dept = await Department.findOne({ id: employee.departmentId })
-        },
-        manager: async (parent: any) => {
-            const manager = await Employee.findOne({ id: parent.managerId })
-            return manager;
-        }
+        department: (employee: any) => Department.findOne({ id: employee.departmentId }),
+        manager: (parent: any) => Employee.findOne({ id: parent.managerId })
     }
 }
