@@ -6,7 +6,8 @@ const employeeSchema = new mongoose.Schema({
     lastName: String,
     jobTitle: String,
     departmentId: String,
-    managerId: String
+    managerId: String,
+    id: String
 })
 export const Employee = mongoose.model('Employee', employeeSchema);
 
@@ -15,7 +16,11 @@ export const typeDef =
 `type Employee {
     firstName: String
     lastName: String
+    fullName: String
     jobTitle: String
+    id: ID
     department: Department
     manager: Employee
+    manages: [Employee]
+    sharesManagerWith: [Employee]
 }`;

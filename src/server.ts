@@ -14,6 +14,9 @@ const QueryType = gql`
     departments: [Department]
     departmentById(id: ID!): Department
   }
+  type Mutation {
+    updateEmployeeById(id: ID!, firstName: String, lastName: String, department: ID, manager: ID): Employee
+  }
 `;
 
 // Connect to the database. Config file provides the URL either through an environment variable or default to localhost
