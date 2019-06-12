@@ -1,0 +1,19 @@
+version: "3"
+services:
+  app:
+    container_name: struct-graphql
+    restart: always
+    build: ./
+    ports:
+      - "4000"
+    volumes:
+      - .:/app
+    links:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/struct-graphql
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"

@@ -1,4 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
+const mongoose = require('mongoose');
+const { MONGO_URL } = require('./config');
 
 const employees = [
     {
@@ -35,6 +37,7 @@ const typeDefs = gql`
     lastName: String
     jobTitle: String
     department: Department
+    manager: Employee
   }
   type Department {
       employees: [Employee]
@@ -43,20 +46,36 @@ const typeDefs = gql`
   }
   type Query {
     employees: [Employee]
+    employee(id: ID!): Employee
     departments: [Department]
     department(id: ID!): Department
   }
 `;
 
+async function dbConnect() {
+  try { 
+    console.log(MONGO_URL);
+    await mongoose.connect(MONGO_URL, { useNewUrlParser: true })
+    console.log(`Connected to DB at ${MONGO_URL}`);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 const resolvers = {
     Query: {
       employees: () => employees,
+      employee: (root: any, { id }: any) => employees.find(employee => employee.id === id),
       departments: () => departments,
       department: (root: any, { id }: any) => departments.find(dept => dept.id === id)
     },
+    Department: {
+      employees: ({ id }: any) => employees.filter(employee => employee.departmentId === id)
+    }
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
+dbConnect();
 
 server.listen().then(({ url }: any) => {
     console.log(`The server is now running at: ${url}`);
