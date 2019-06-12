@@ -1,5 +1,5 @@
+import * as mongoose from 'mongoose';
 const { ApolloServer, gql } = require('apollo-server');
-const mongoose = require('mongoose');
 const { MONGO_URL } = require('./config');
 
 const employees = [
@@ -52,6 +52,18 @@ const typeDefs = gql`
   }
 `;
 
+const resolvers = {
+  Query: {
+    employees: () => employees,
+    employee: (root: any, { id }: any) => employees.find(employee => employee.id === id),
+    departments: () => departments,
+    department: (root: any, { id }: any) => departments.find(dept => dept.id === id)
+  },
+  Department: {
+    employees: ({ id }: any) => employees.filter(employee => employee.departmentId === id)
+  }
+};
+
 async function dbConnect() {
   try { 
     console.log(MONGO_URL);
@@ -61,18 +73,6 @@ async function dbConnect() {
     console.log(err);
   }
 }
-
-const resolvers = {
-    Query: {
-      employees: () => employees,
-      employee: (root: any, { id }: any) => employees.find(employee => employee.id === id),
-      departments: () => departments,
-      department: (root: any, { id }: any) => departments.find(dept => dept.id === id)
-    },
-    Department: {
-      employees: ({ id }: any) => employees.filter(employee => employee.departmentId === id)
-    }
-};
 
 const server = new ApolloServer({ typeDefs, resolvers });
 dbConnect();
