@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 const { ApolloServer, gql } = require('apollo-server');
 const { MONGO_URL } = require('./config');
-import { Employee, Department } from './models';
+import { merge } from 'lodash';
+import { resolvers as employeeResolvers } from './employees/resolvers';
+import { resolvers as departmentResolvers } from './departments/resolvers';
 
 const typeDefs = gql`
   type Employee {
@@ -18,22 +20,11 @@ const typeDefs = gql`
   }
   type Query {
     employees: [Employee]
-    employee(id: ID!): Employee
+    employeeById(id: ID!): Employee
     departments: [Department]
-    department(id: ID!): Department
+    departmentById(id: ID!): Department
   }
 `;
-
-const resolvers = {
-  Query: {
-    employees: async () => {
-      return Employee.find({})
-    },
-    employee: async (root: any, { id }: any) => await Employee.findOne({ id }),
-    departments: () => Department.find(),
-    department: (root: any, { id }: any) => Department.findOne({ id })
-  }
-};
 
 async function dbConnect() {
   try { 
@@ -43,6 +34,8 @@ async function dbConnect() {
     console.log(err);
   }
 }
+
+const resolvers = merge(employeeResolvers, departmentResolvers);
 
 const server = new ApolloServer({ typeDefs, resolvers });
 dbConnect();
