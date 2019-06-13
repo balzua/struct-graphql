@@ -31,8 +31,11 @@ export const resolvers = {
     Employee: {
         fullName: (parent: any) => parent.firstName + ' ' + parent.lastName,
         department: (parent: any) => Department.findOne({ id: parent.departmentId }),
+        // Find the employee whose id is equal to this employee's managerId
         manager: (parent: any) => Employee.findOne({ id: parent.managerId }),
+        // Find employees who have this employee's id as their managerId
         manages: (parent: any) => Employee.find({ managerId: parent.id }),
+        // Find employees who also have the same manager id as this employee's managerId
         sharesManagerWith: (parent: any) => Employee.find({ managerId: parent.managerId }),
     }
 }
