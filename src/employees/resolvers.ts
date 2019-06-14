@@ -13,6 +13,15 @@ export const resolvers = {
     Query: {
         employees: () => Employee.find(),
         employeeById: (root: any, { id }: any) => Employee.findOne({ id }),
+        // Mongoose query to search for employees based on the search term and sort by the most relevant results.
+        // Only the firstName, lastName, and jobTitle fields are text-indexed; therefore only they will be searched
+        employeeSearch: (root: any, { searchTerm }: any) => {
+            return Employee.find(
+            { $text: { $search: searchTerm } }, 
+            { score: { $meta: "textScore" } })
+            .sort({ score: { $meta : "textScore" } })
+        }
+            
     },
     Mutation: {
         updateEmployeeById: (root: any, { id, firstName, lastName, departmentId, managerId }: any) => {

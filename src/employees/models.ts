@@ -9,6 +9,8 @@ const employeeSchema = new mongoose.Schema({
     managerId: String,
     id: String
 })
+// Create text indexes on the firstName, lastName, and jobTitle properties - to be used for searches later
+employeeSchema.index({ firstName: 'text', lastName: 'text', jobTitle: 'text' });
 export const Employee = mongoose.model('Employee', employeeSchema);
 
 // GraphQL Schema Type Definition

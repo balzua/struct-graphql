@@ -20,7 +20,7 @@ async function dbConnect() {
 const resolvers = merge(employeeResolvers, departmentResolvers);
 
 // Create new apollo-server, connect to the database, and listen on port 4000 (default for Apollo Server)
-const server = new ApolloServer({ typeDefs, resolvers });
+export const server = new ApolloServer({ typeDefs, resolvers });
 dbConnect();
 server.listen().then(({ url }: any) => {
     console.log(`The server is now running at: ${url}`);

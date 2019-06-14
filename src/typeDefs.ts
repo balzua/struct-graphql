@@ -5,6 +5,7 @@ const QueryType = `
   type Query {
     employees: [Employee]
     employeeById(id: ID!): Employee
+    employeeSearch(searchTerm: String!): [Employee]
     departments: [Department]
     departmentById(id: ID!): Department
   }`;
