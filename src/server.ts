@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const { MONGO_URL } = require('./config');
 import { merge } from 'lodash';
 import { resolvers as employeeResolvers } from './employees/resolvers';
@@ -16,8 +16,8 @@ async function dbConnect() {
   }
 }
 
-// Merge resolvers using lodash merge
-const resolvers = merge(employeeResolvers, departmentResolvers);
+// Merge resolvers using lodash merge - export them for use in tests
+export const resolvers = merge(employeeResolvers, departmentResolvers);
 
 // Create new apollo-server, connect to the database, and listen on port 4000 (default for Apollo Server)
 export const server = new ApolloServer({ typeDefs, resolvers });
