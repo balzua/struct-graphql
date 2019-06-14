@@ -1,10 +1,10 @@
 # struct-graphql
 
 ## Running the application
-Use `docker-compose up -d` to run the application. The application will be available on port 4000
+Use `docker-compose up -d` to run the application. The application will be available on port 4000 of the container
 
 ## Running tests
-If running the tests for the first time, first use `npm install` to download necessary dependencies locally.
+First please use `npm install` to install dependencies for the test.
 Then use `npm test` to run the tests.
 
 ## API Documentation
