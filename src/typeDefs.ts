@@ -11,7 +11,7 @@ const QueryType = `
   }`;
 const MutationType = `
   type Mutation {
-    updateEmployeeById(id: ID!, firstName: String, lastName: String, department: ID, manager: ID): Employee
+    updateEmployeeById(id: ID!, firstName: String, lastName: String, jobTitle: String, department: ID, manager: ID): Employee
   }`;
 
 // Merge type definitions into single array & export

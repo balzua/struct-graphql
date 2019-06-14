@@ -24,10 +24,11 @@ export const resolvers = {
             
     },
     Mutation: {
-        updateEmployeeById: (root: any, { id, firstName, lastName, departmentId, managerId }: any) => {
+        updateEmployeeById: (root: any, { id, firstName, lastName, jobTitle, departmentId, managerId }: any) => {
             let updatedEmployee: {[index: string]: {value: string}} = {
                 "firstName": firstName,
                 "lastName": lastName,
+                "jobTitle": jobTitle,
                 "departmentId": departmentId,
                 "managerId": managerId
             }

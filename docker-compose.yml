@@ -8,12 +8,5 @@ services:
       - "4000"
     volumes:
       - .:/app
-    links:
-      - mongo
     environment:
-      - MONGO_URL=mongodb://mongo:27017/struct-graphql
-  mongo:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "27017:27017"
+      - MONGO_URL=mongodb://balzua:testdb56@ds337377.mlab.com:37377/struct-graphql
