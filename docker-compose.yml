@@ -6,7 +6,20 @@ services:
     build: ./
     ports:
       - "4000:4000"
+    depends_on:
+      - "mongo"
+  mongo-seed:
+    build: ./mongo
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - "27107:27017"
     volumes:
-      - .:/app
-    environment:
-      - MONGO_URL=mongodb://balzua:testdb56@ds337377.mlab.com:37377/struct-graphql
+      - data-volume:/data/db
+volumes:
+  data-volume:
+    
