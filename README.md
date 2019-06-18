@@ -1,7 +1,8 @@
 # struct-graphql
 
 ## Running the application
-Use `docker-compose up -d` to run the application. The application will be available on port 4000 of the container
+Use `docker-compose up -d` to run the application. The application will be available on port 4000 of the container.
+This will seed the database with starting data. To restart the server while preserving changes made to the database, use `docker-compose restart app` to restart the web server only. 
 
 ## Running tests
 First please use `npm install` to install dependencies for the test.
