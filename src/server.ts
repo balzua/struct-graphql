@@ -21,9 +21,7 @@ const resolvers = merge(employeeResolvers, departmentResolvers);
 
 // Create new apollo-server, connect to the database, and listen on port 4000 (default for Apollo Server)
 export const server = new ApolloServer({ typeDefs, resolvers });
-dbConnect().then(() => {
-  server.listen().then(({ url }: any) => {
+dbConnect();
+server.listen().then(({ url }: any) => {
     console.log(`The server is now running at: ${url}`);
-  });
 });
-
